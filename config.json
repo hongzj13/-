@@ -38,8 +38,8 @@
                 },
     "bangumi":  {
                     "oauthAppId":  "",
-                    "usePublicCollections":  false,
-                    "username":  "",
+                    "usePublicCollections":  true,
+                    "username":  "LAMAYENIMAL",
                     "highlightFollowed":  true,
                     "showOnlyFollowed":  false,
                     "oauthRedirectPort":  3721,

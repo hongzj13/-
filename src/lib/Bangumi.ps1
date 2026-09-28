@@ -2,10 +2,10 @@
 #  日历      GET  https://api.bgm.tv/calendar
 #  条目详情  GET  https://api.bgm.tv/v0/subjects/{id}
 #  条目搜索  POST https://api.bgm.tv/v0/search/subjects
-#  我的收藏  GET  https://api.bgm.tv/v0/users/-/collections      (需 Token)
-#  公开收藏  GET  https://api.bgm.tv/v0/users/{user}/collections (公开)
-#  当前用户  GET  https://api.bgm.tv/v0/users/-                  (需 Token)
-#  加入在看  POST https://api.bgm.tv/v0/users/-/collections/{id}
+#  当前用户  GET  https://api.bgm.tv/v0/me                        (需 Token)
+#  我的收藏  GET  https://api.bgm.tv/v0/users/{user}/collections  (带 Token 可读私密)
+#  公开收藏  GET  https://api.bgm.tv/v0/users/{user}/collections  (公开)
+#  加入在看  POST https://api.bgm.tv/v0/users/{user}/collections/{id}
 #  OAuth     https://bgm.tv/oauth/authorize  +  https://bgm.tv/oauth/access_token
 # 目标运行时：Windows PowerShell 5.1
 
@@ -162,7 +162,17 @@ function Get-BangumiCollections {
     )
     $all = New-Object System.Collections.ArrayList
     $base = ''
-    if ($Token) { $base = $script:BgmApi + '/v0/users/-/collections' }
+    if ($Token) {
+        # Token 时先经 /v0/me 解析当前用户名，再走 /v0/users/{username}/collections（带 Bearer 可读私密收藏）
+        $me = Get-BangumiMe -Token $Token -Config $Config
+        $meName = ''
+        if ($me.ok -and $me.data) { $meName = [string](Get-Prop $me.data 'username' '') }
+        if (-not $meName -and $Username) { $meName = $Username }
+        if (-not $meName) {
+            return [pscustomobject]@{ ok = $false; items = @(); error = $(if ($me.error) { $me.error } else { '无法解析当前用户' }) }
+        }
+        $base = $script:BgmApi + '/v0/users/' + [uri]::EscapeDataString($meName) + '/collections'
+    }
     elseif ($Username) { $base = $script:BgmApi + '/v0/users/' + [uri]::EscapeDataString($Username) + '/collections' }
     else { return [pscustomobject]@{ ok = $false; items = @(); error = '未登录且未设置用户名' } }
 
@@ -189,7 +199,7 @@ function Get-BangumiCollections {
 function Get-BangumiMe {
     param([string]$Token, $Config)
     if (-not $Token) { return [pscustomobject]@{ ok = $false; data = $null; error = '未提供 Token' } }
-    $url = $script:BgmApi + '/v0/users/-'
+    $url = $script:BgmApi + '/v0/me'
     $r = Invoke-JsonApi -Url $url -Headers (Get-BangumiHeaders $Config -Token $Token) -Network (Get-Prop $Config 'network')
     return $r
 }
@@ -197,7 +207,11 @@ function Get-BangumiMe {
 function Add-BangumiCollection {
     param([int]$SubjectId, [string]$Token, $Config, [int]$Type = 3)
     if (-not $Token) { return [pscustomobject]@{ ok = $false; error = '未登录' } }
-    $url = $script:BgmApi + '/v0/users/-/collections/' + $SubjectId
+    $me = Get-BangumiMe -Token $Token -Config $Config
+    $meName = ''
+    if ($me.ok -and $me.data) { $meName = [string](Get-Prop $me.data 'username' '') }
+    if (-not $meName) { return [pscustomobject]@{ ok = $false; error = $(if ($me.error) { $me.error } else { '无法解析当前用户' }) } }
+    $url = $script:BgmApi + '/v0/users/' + [uri]::EscapeDataString($meName) + '/collections/' + $SubjectId
     $body = [pscustomobject]@{ type = $Type } | ConvertTo-Json -Compress
     $r = Invoke-HttpText -Url $url -Method 'POST' -Body $body -Headers (Get-BangumiHeaders $Config -Token $Token -Json) -Network (Get-Prop $Config 'network')
     return [pscustomobject]@{ ok = $r.ok; status = $r.status; error = $r.error }
