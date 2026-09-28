@@ -1,0 +1,17 @@
+# ====================================================================
+#  运行期生成的数据 —— 切勿提交！
+#  data\auth.json  里面是 Bangumi 访问令牌 / App Secret（明文）
+#  data\state.json 抓取缓存；data\cache\ 网页/接口缓存；widget.log 日志
+# ====================================================================
+data/
+
+# 界面截图（tools\Test-Ui.ps1 / verify.cmd 自动生成）
+build/
+
+# 临时文件
+tools/_*
+*.log
+
+# 系统/编辑器杂项
+Thumbs.db
+.DS_Store

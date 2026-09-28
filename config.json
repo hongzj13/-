@@ -1,0 +1,48 @@
+{
+    "version":  1,
+    "ui":  {
+               "theme":  "deep-purple",
+               "rememberSize":  true,
+               "width":  404,
+               "rowsPerView":  3,
+               "bgCustom":  "#14121E",
+               "topMost":  true,
+               "fontFamily":  "Microsoft YaHei UI",
+               "showTrayIcon":  true,
+               "accent":  "#9D7BFF",
+               "rememberPosition":  true,
+               "height":  348,
+               "opacity":  1
+           },
+    "data":  {
+                 "showStreaming":  true,
+                 "showNextUp":  true,
+                 "lookaheadDays":  21,
+                 "dailyRefreshAt":  "04:10",
+                 "refreshHours":  6,
+                 "onlyNewAnime":  true,
+                 "useYuc":  true,
+                 "yucBaseUrl":  "https://yuc.wiki",
+                 "resolveBangumiIds":  true,
+                 "dropEndedAfterDays":  14,
+                 "maxResolvePerRefresh":  30,
+                 "useBangumi":  true,
+                 "showJstTime":  true
+             },
+    "network":  {
+                    "userAgent":  "anime-widget/1.0 (personal desktop widget)",
+                    "allowInsecureTls":  true,
+                    "proxyMode":  "auto",
+                    "timeoutSec":  25,
+                    "proxyUrl":  "http://127.0.0.1:7897"
+                },
+    "bangumi":  {
+                    "oauthAppId":  "",
+                    "usePublicCollections":  false,
+                    "username":  "",
+                    "highlightFollowed":  true,
+                    "showOnlyFollowed":  false,
+                    "oauthRedirectPort":  3721,
+                    "oauthAppSecret":  ""
+                }
+}
