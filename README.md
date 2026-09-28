@@ -1,10 +1,10 @@
-﻿# 新番桌面小组件 · Anime Airing Widget
+# 新番桌面小组件 · Anime Airing Widget
 
 一个 Windows 桌面悬浮小组件：**每天**告诉你今天有哪些**新番**在播、**几点播（北京时间）**、**叫什么**、**什么标签**、**在哪个平台放**；
 登录 Bangumi 后，还会把你**正在追**的番用 ★ 标注出来，并给出它们各自的播出时间。
 
-```
-<img width="606" height="636" alt="image" src="https://github.com/user-attachments/assets/96db912f-8b59-4a3d-8070-466681802921" />
+
+<img width="606" height="636" alt="image" src="https://github.com/user-attachments/assets/f6fe4f1d-9c75-4488-bad5-42b46c8a913f" />
 
 
 ---
@@ -30,10 +30,6 @@
 | 新番名单、**播出时间**、星期、首播日、题材标签、改编类型、版权平台、封面、官网/PV、制作与声优 | **yuc.wiki（長門番堂 / 长门有C 新番表）** | 抓取当季 + 即将开播季的 `/YYYYMM/` 页面并解析 |
 | 中文名 / 日文名 / 评分 / 放送电视台 / 标签 / 条目链接 | **Bangumi API**（api.bgm.tv） | `/calendar`、`/v0/subjects/{id}`、搜索接口 |
 | **我的在看（追番）** | **Bangumi**（Token 或公开用户名） | `/v0/users/-/collections` 或 `/v0/users/{用户名}/collections` |
-
-<img width="606" height="636" alt="image" src="https://github.com/user-attachments/assets/d93b3977-1c3a-4885-be62-683560a5ccef" />
-
-
 
 **「只展示新番」** 是如何保证的：名单本身只来自 yuc.wiki 的「本季新番表」（不含长篇连载），
 再用 Bangumi 每日放送日历交叉验证「是否仍在播」，把已经完结的往季作品剔除
@@ -115,6 +111,8 @@ anime-widget/
 
 > **安全提示**：`auth.json` 以**明文**保存令牌与 App Secret，仅保存在本机 `data` 目录。
 > 不要把这个文件（或整个 `data` 目录）分享给别人；注销按钮会清空它。
+
+<img width="606" height="636" alt="image" src="https://github.com/user-attachments/assets/00034b77-3e0a-4a65-9e44-d965fa3add33" />
 
 ---
 
