@@ -27,7 +27,7 @@
 
 打开仓库页面：
 
-https://github.com/hongzj13/anime-widget
+https://github.com/hongzj13/-
 
 点绿色的 Code 按钮 → Download ZIP
 
@@ -37,7 +37,7 @@ https://github.com/hongzj13/anime-widget
 
 在powershell中输入
 ```
-git clone https://github.com/<你的用户名>/anime-widget.git
+git clone https://github.com/hongzj13/-.git
 cd anime-widget
 ```
 方式 3：拷贝文件夹
