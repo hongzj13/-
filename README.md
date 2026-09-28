@@ -198,7 +198,7 @@ powershell -NoProfile -STA -File tools\Test-Ui.ps1 -Root .
 ---
 
 
-## 11. 已知限制
+## 10. 已知限制
 
 * 只在 **Windows** 上运行（WinForms + GDI+ 自绘）。
 * yuc.wiki 的「版权平台」只标注中文圈（**巴哈姆特 / Crunchyroll / Netflix** 等，标签为 港台/环大陆/台湾/香港）；
