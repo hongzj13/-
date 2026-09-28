@@ -27,7 +27,9 @@
 https://github.com/hongzj13/anime-widget
 点绿色的 Code 按钮 → Download ZIP
 把 ZIP 解压到任意目录，例如 D:\anime-widget
+
 方式 2：Git 克隆
+
 在powershell中输入
 ```
 git clone https://github.com/<你的用户名>/anime-widget.git
