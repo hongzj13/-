@@ -456,14 +456,15 @@ function Update-UiRegions {
         @{ name = 'refresh'; text = '刷新' },
         @{ name = 'follow';  text = '追番' },
         @{ name = 'settings'; text = '设置' },
+        @{ name = 'minimize'; text = '—' },
         @{ name = 'close';   text = '×' }
     )
     $bw = 46; $bh = 22; $gap = 6
     $right = $layout.Width - 10
-    $reversed = @($buttons[3], $buttons[2], $buttons[1], $buttons[0])
+    $reversed = @($buttons[($buttons.Count - 1)..0])
     $xs = @{}
     foreach ($b in $reversed) {
-        $width = $(if ($b.name -eq 'close') { 24 } else { $bw })
+        $width = $(if ($b.name -eq 'close' -or $b.name -eq 'minimize') { 24 } else { $bw })
         $rect = New-Object System.Drawing.Rectangle(($right - $width), 12, $width, $bh)
         $xs[$b.name] = $rect
         [void]$regions.Add(@{ kind = 'button'; name = $b.name; rect = $rect })
@@ -566,24 +567,25 @@ function Draw-Widget {
     Draw-TextBlock -G $G -Text $titleText -Font $fonts.title -Color $theme.text -Rect (New-Object System.Drawing.Rectangle(12, 8, 150, 22)) -Align 'Near'
 
     $dateText = Format-DateCn (Get-Date)
-    if ($state) { $dateText += ('  ·  ' + @($state.shows).Count + ' 部新番') }
-    Draw-TextBlock -G $G -Text $dateText -Font $fonts.sub -Color $theme.sub -Rect (New-Object System.Drawing.Rectangle(12, 27, 210, 16))
+    Draw-TextBlock -G $G -Text $dateText -Font $fonts.sub -Color $theme.sub -Rect (New-Object System.Drawing.Rectangle(12, 27, 200, 16))
 
     foreach ($r in $Ui.Regions) {
         if ($r.kind -ne 'button') { continue }
         $hover = ($Ui.HoverBtn -eq $r.name)
         $isClose = ($r.name -eq 'close')
+        $isIcon = ($r.name -eq 'close' -or $r.name -eq 'minimize')
         if ($hover) {
             $bgc = $(if ($isClose) { $theme.warn } else { $theme.chipBg })
             Fill-RoundedRect -G $G -Rect $r.rect -Color $bgc -Radius 7
         }
         $fg = $(if ($hover) { $theme.text } else { $theme.sub })
-        $font = $(if ($isClose) { $fonts.title } else { $fonts.btn })
+        $font = $(if ($isIcon) { $fonts.title } else { $fonts.btn })
         $text = ''
         switch ($r.name) {
             'refresh' { $text = $(if ($Ui.Refreshing) { '…' } else { '刷新' }) }
             'follow' { $text = '追番' }
             'settings' { $text = '设置' }
+            'minimize' { $text = '—' }
             'close' { $text = '×' }
         }
         Draw-TextBlock -G $G -Text $text -Font $font -Color $fg -Rect $r.rect -Align 'Center'

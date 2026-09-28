@@ -156,6 +156,12 @@ function Get-RegionAt {
     param($Ui, [System.Drawing.Point]$Point)
     foreach ($r in $Ui.Regions) {
         if ($null -eq $r.rect) { continue }
+        # 关键：行区域只在「列表区」内可命中。
+        # 滚屏后行的矩形会向上盖住标题栏/页签、向下盖住页脚，
+        # 若不限制就会把“点标题栏拖动”误判成“点某一行”，导致无法拖拽移动。
+        if ($r.kind -eq 'row') {
+            if ($Ui.Layout -and -not $Ui.Layout.List.Contains($Point)) { continue }
+        }
         if ($r.rect.Contains($Point)) { return $r }
     }
     return $null
@@ -325,6 +331,7 @@ function Start-Widget {
                         'refresh' { Start-WidgetRefresh -Ui $Ui -Force }
                         'follow' { $Ui.Tab = 'follow'; $Ui.ScrollY = 0; $form.Invalidate() }
                         'settings' { Show-SettingsDialog -Config $Ui.Config }
+                        'minimize' { $form.Visible = $false }
                         'close' { $Ui.Exiting = $true; $form.Close() }
                     }
                 }

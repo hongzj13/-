@@ -4,7 +4,7 @@
                "theme":  "deep-purple",
                "rememberSize":  true,
                "width":  404,
-               "rowsPerView":  3,
+               "rowsPerView":  4,
                "bgCustom":  "#14121E",
                "topMost":  true,
                "fontFamily":  "Microsoft YaHei UI",
