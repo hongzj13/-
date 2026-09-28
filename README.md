@@ -22,10 +22,15 @@
 路径**可以带空格**（`run.cmd` 内部已全部加引号）。
 
 下载方式
+
 直接下载 ZIP
+
 打开仓库页面：
+
 https://github.com/hongzj13/anime-widget
+
 点绿色的 Code 按钮 → Download ZIP
+
 把 ZIP 解压到任意目录，例如 D:\anime-widget
 
 方式 2：Git 克隆
@@ -36,6 +41,7 @@ git clone https://github.com/<你的用户名>/anime-widget.git
 cd anime-widget
 ```
 方式 3：拷贝文件夹
+
 直接把整个 anime-widget 文件夹拷给别人也行——它是绿色免安装的，不用注册表、不写系统目录。
 
 ---
