@@ -38,7 +38,7 @@ https://github.com/hongzj13/-
 在powershell中输入
 ```
 git clone https://github.com/hongzj13/-.git
-cd anime-widget
+cd -
 ```
 方式 3：拷贝文件夹
 
